@@ -1,0 +1,10 @@
+{
+    "name": "dig.enzosoares/projetoenzo",
+    "autoload": {
+        "psr-4": {
+            "DigEnzosoares\\Projetoenzo\\": "src/",
+             "app\\": "app/"
+        }
+    },
+    "require": {}
+}
