@@ -1,15 +1,24 @@
 <?php
-
-use app\classes\uri;
-use core\controller;
-
 require '../bootstrap.php';
 
-dd(app\classes\uri::uri());
+use app\classes\Uri;
 
 
-$controller = new Controller;
-$controller -> $getcontroller();
+use core\Controller;
+
+try{
+
+    $controller = new Controller;
+    $load_result = $controller->load();
+    dd($load_result);
+    
+} catch (Exception$e){
+    
+dd($e->getMessage());
+
+
+}
+
 
 //$method = new Method;
 //$method ->$getmethod();

@@ -2,16 +2,16 @@
 
 namespace core;
 
-use app\classes\uri;
-
+use app\classes\Uri;
+use app\exceptions\ControllerNotExistException;
 class Controller
 {
-private $namespace;
-private $controller;
+    private $namespace;
+    private $controller;
     private $uri;
-    private $folders= [
+    private $folders = [
         'app\controllers\portal',
-        'app\controllers\admin', 
+        'app\controllers\admin',
         'app\controllers\blog'
     ];
 
@@ -19,7 +19,11 @@ private $controller;
     {
         $this->uri = uri::uri();
     }
+    private function ishome()
+    {
 
+        return ($this->uri === "/projetoenzo/public/");
+    }
     public function load()
     {
 
@@ -29,91 +33,36 @@ private $controller;
         }
         return $this->controllerNotHome();
     }
-    private function ishome()
-    {
 
-        return ($this->uri === "/");
-    }
     private function controllerNotHome()
     {
 
-        return ($this->uri === "/");
+        return ($this->uri === "/projetoenzo/public/");
     }
     private function controllerHome()
     {
-        if (!$this->controllerExist('Homecontroller')){
-            throw new ControllerNotExistException("Esse controller não existe");
+        if (!$this->controllerExist('Homecontroller')) {
+            throw new ControllerNotExistException("A página que você tentou acessar não existe");
         }
-        return$this->instantiateController();
+        return $this->instantiateController();
     }
 
-private function controllerExist($controller){
-$controllerexist = false;
+    private function controllerExist($controller)
+    {
+        $controllerexist = false;
 
-foreach ($this->folders as $folder) {
-    if(class_exists($folder.'\\'.$controller)){
-        $controllerexist = true;
-        $this -> namespace = $folder;
-        $this -> $controller = $controller;    
+        foreach ($this->folders as $folder) {
+            if (class_exists($folder . '\\' . $controller)) {
+                $controllerexist = true;
+                $this->namespace = $folder;
+                $this->$controller = $controller;
+            }
         }
-
-}
-return $controllerexist;
-}
-private function instantiateController(){
-    
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return $controllerexist;
     }
+    private function instantiateController()
+    {
+        $controller = $this->namespace . "\\" . $this->controller;
+        return new $controller;
+    }
+}

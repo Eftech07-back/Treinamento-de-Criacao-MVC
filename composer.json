@@ -3,7 +3,9 @@
     "autoload": {
         "psr-4": {
             "DigEnzosoares\\Projetoenzo\\": "src/",
-             "app\\": "app/"
+             "app\\": "app/",
+            "core\\": "core/"
+
         }
     },
     "require": {}
